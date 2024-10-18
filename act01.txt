@@ -1,0 +1,30 @@
+
+import 'dart:io';
+
+void main() {
+  double sueldoBasico = 350.75;
+
+  // Solicitar el importe total vendido en el mes
+  print('Ingrese el importe total vendido en el mes:');
+  double ventas = double.parse(stdin.readLineSync()!);
+
+  // Cálculo de la comisión
+  double comision = ventas * 0.05;
+
+  // Cálculo del sueldo bruto
+  double sueldoBruto = sueldoBasico + comision;
+
+  // Cálculo del descuento
+  double descuento = sueldoBruto * 0.15;
+
+  // Cálculo del sueldo neto
+  double sueldoNeto = sueldoBruto - descuento;
+
+  // Imprimir boleta
+  print('--- Boleta del Vendedor ---');
+  print('Sueldo Básico: S/. $sueldoBasico');
+  print('Comisión: S/. $comision');
+  print('Sueldo Bruto: S/. $sueldoBruto');
+  print('Descuento: S/. $descuento');
+  print('Sueldo Neto: S/. $sueldoNeto');
+}

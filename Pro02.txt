@@ -1,0 +1,117 @@
+
+/*Una empresa evalúa a sus empleados bajo dos criterios: puntualidad y rendimiento. En cada caso, 
+el empleado recibe un puntaje que va de 1 a 10, de acuerdo con los siguientes criterios: 
+
+Puntaje por puntualidad: - está en función de los minutos de tardanza de acuerdo con la 
+siguiente tabla:
+Minutos de tardanza Puntaje
+0 - 10
+1 a 2 - 8
+3 a 5 - 6
+6 a 9 - 4
+Mas de - 9 0
+Puntaje por rendimiento: - está en función de la cantidad de observaciones efectuadas al 
+empleado por no cumplir sus obligaciones de acuerdo con la siguiente tabla:
+Observaciones efectuadas Puntaje
+0 - 10
+1 - 8
+2 - 5
+3 - 1
+Mas de 3 - 0
+El puntaje total del empleado es la suma del puntaje por puntualidad más el puntaje por 
+rendimiento. Basándose en el puntaje total, el empleado recibe una bonificación anual de acuerdo 
+con la siguiente tabla:
+Puntaje total Bonificación
+Menos de 11 - S/. 2.5 por punto
+11 a 13 - S/. 5.0 por punto
+14 a 16 - S/. 7.5 por punto
+17 a 19 - S/. 10.0 por punto
+20 - S/. 12.5 por punto
+Dados los minutos de tardanza y el número de observaciones de un empleado, diseñe un 
+programa que determine el puntaje por puntualidad, el puntaje por rendimiento, el puntaje total 
+y la bonificación que le corresponden.*/
+
+import 'dart:io';
+
+class Empleado {
+  String nombre;
+  int minutosTardanza;
+  int observaciones;
+
+  Empleado(this.nombre, this.minutosTardanza, this.observaciones);
+
+  // Método para calcular puntaje por puntualidad
+  int calcularPuntajePuntualidad() {
+    if (minutosTardanza == 0) return 10;
+    if (minutosTardanza >= 1 && minutosTardanza <= 2) return 8;
+    if (minutosTardanza >= 3 && minutosTardanza <= 5) return 6;
+    if (minutosTardanza >= 6 && minutosTardanza <= 9) return 4;
+    return 0; // Más de 9 minutos
+  }
+
+  // Método para calcular puntaje por rendimiento
+  int calcularPuntajeRendimiento() {
+    if (observaciones == 0) return 10;
+    if (observaciones == 1) return 8;
+    if (observaciones == 2) return 5;
+    if (observaciones == 3) return 1;
+    return 0; // Más de 3 observaciones
+  }
+
+  // Método para calcular puntaje total
+  int calcularPuntajeTotal() {
+    return calcularPuntajePuntualidad() + calcularPuntajeRendimiento();
+  }
+
+  // Método para calcular la bonificación
+  double calcularBonificacion() {
+    int puntajeTotal = calcularPuntajeTotal();
+    if (puntajeTotal < 11) return puntajeTotal * 2.5;
+    if (puntajeTotal >= 11 && puntajeTotal <= 13) return puntajeTotal * 5.0;
+    if (puntajeTotal >= 14 && puntajeTotal <= 16) return puntajeTotal * 7.5;
+    if (puntajeTotal >= 17 && puntajeTotal <= 19) return puntajeTotal * 10.0;
+    return puntajeTotal * 12.5; // Puntaje total de 20
+  }
+
+  // Método para mostrar el reporte del empleado
+  void mostrarReporte() {
+    int puntajePuntualidad = calcularPuntajePuntualidad();
+    int puntajeRendimiento = calcularPuntajeRendimiento();
+    int puntajeTotal = calcularPuntajeTotal();
+    double bonificacion = calcularBonificacion();
+
+    print('------------ Reporte de $nombre ------------');
+    print('Puntaje por Puntualidad: $puntajePuntualidad');
+    print('Puntaje por Rendimiento: $puntajeRendimiento');
+    print('Puntaje Total: $puntajeTotal');
+    print('Bonificación: S/. ${bonificacion.toStringAsFixed(2)}');
+    print('--------------------------------------------');
+  }
+}
+
+void main() {
+  List<Empleado> empleados = [];
+
+  stdout.write('¿Cuántos empleados desea evaluar?: ');
+  int cantidad = int.parse(stdin.readLineSync()!);
+
+  for (int i = 0; i < cantidad; i++) {
+    stdout.write('Ingrese el nombre del empleado ${i + 1}: ');
+    String nombre = stdin.readLineSync()!;
+
+    stdout.write('Ingrese los minutos de tardanza de $nombre: ');
+    int minutosTardanza = int.parse(stdin.readLineSync()!);
+
+    stdout.write('Ingrese la cantidad de observaciones de $nombre: ');
+    int observaciones = int.parse(stdin.readLineSync()!);
+
+    // Crear un empleado y agregarlo a la lista
+    Empleado empleado = Empleado(nombre, minutosTardanza, observaciones);
+    empleados.add(empleado);
+  }
+
+  // Mostrar el reporte de todos los empleados
+  for (Empleado empleado in empleados) {
+    empleado.mostrarReporte();
+  }
+}

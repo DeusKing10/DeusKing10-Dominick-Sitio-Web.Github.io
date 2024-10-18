@@ -1,0 +1,61 @@
+
+import 'dart:io';
+
+void main() {
+  // Solicitar categoría del empleado
+  print('Ingrese la categoría del empleado (A, B, C):');
+  String categoria = stdin.readLineSync()!.toUpperCase();
+
+  // Solicitar horas trabajadas
+  print('Ingrese la cantidad de horas trabajadas:');
+  int horasTrabajadas = int.parse(stdin.readLineSync()!);
+
+  // Solicitar la cantidad de hijos
+  print('Ingrese la cantidad de hijos:');
+  int cantidadHijos = int.parse(stdin.readLineSync()!);
+
+  // Definir tarifa horaria y bonificación por categoría
+  double tarifaHoraria;
+  double bonificacionHijos;
+
+  switch (categoria) {
+    case 'A':
+      tarifaHoraria = 50.0;
+      bonificacionHijos = 40.0;
+      break;
+    case 'B':
+      tarifaHoraria = 40.0;
+      bonificacionHijos = 30.0;
+      break;
+    case 'C':
+      tarifaHoraria = 30.0;
+      bonificacionHijos = 20.0;
+      break;
+    default:
+      print('Categoría inválida');
+      return;
+  }
+
+  // Cálculo del sueldo básico
+  double sueldoBasico = horasTrabajadas * tarifaHoraria;
+
+  // Cálculo de la bonificación
+  double bonificacion = cantidadHijos * bonificacionHijos;
+
+  // Cálculo del sueldo bruto
+  double sueldoBruto = sueldoBasico + bonificacion;
+
+  // Cálculo del descuento
+  double descuento = sueldoBruto > 2000 ? sueldoBruto * 0.15 : sueldoBruto * 0.10;
+
+  // Cálculo del sueldo neto
+  double sueldoNeto = sueldoBruto - descuento;
+
+  // Imprimir boleta
+  print('--- Boleta del Empleado ---');
+  print('Sueldo Básico: S/. $sueldoBasico');
+  print('Bonificación: S/. $bonificacion');
+  print('Sueldo Bruto: S/. $sueldoBruto');
+  print('Descuento: S/. $descuento');
+  print('Sueldo Neto: S/. $sueldoNeto');
+}
